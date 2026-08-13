@@ -1,0 +1,6 @@
+{
+  "name": "model-routing",
+  "version": "1.0.0",
+  "description": "Fable司令塔 + Opus/Sonnet モデル振り分け構成",
+  "author": { "name": "yuki-eto" }
+}

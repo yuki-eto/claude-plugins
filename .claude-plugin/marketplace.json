@@ -1,0 +1,12 @@
+{
+  "name": "yuki-eto-plugins",
+  "owner": { "name": "yuki-eto" },
+  "description": "yuki-eto の Claude Code プラグインマーケットプレイス",
+  "plugins": [
+    {
+      "name": "model-routing",
+      "source": "./plugins/model-routing",
+      "description": "Fable司令塔 + Opus/Sonnet モデル振り分け構成"
+    }
+  ]
+}
