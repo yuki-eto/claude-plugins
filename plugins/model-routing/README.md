@@ -11,17 +11,20 @@ Fable 司令塔 + Opus/Sonnet モデル振り分け構成のプラグイン。
 | （メイン会話） | Fable | 司令塔。タスクを受け取り `work-lead` に委譲する。直接扱うのは、`work-lead` が複数回失敗した問題と、アーキテクチャ全体に関わる設計判断のみ。 |
 | `work-lead` | Opus | 実装・調査・バグ修正など大半のタスクの受け皿。タスクを分解し、設計判断・曖昧さの解消・成果物の検証を担う。Agent ツールを含む全ツールを利用可能。 |
 | `coder` | Sonnet | 仕様が明確な実装・単純な修正・簡単なコード調査。Read / Edit / Write / Bash / Grep / Glob のみ。 |
+| `explorer` | Haiku | コードベースの探索・検索専用。ファイルや関数の所在特定、使用箇所の洗い出し、依存関係の列挙などの機械的な調査。読み取り専用（Read / Grep / Glob / Bash）で、原因分析や設計判断はしない。 |
 
 ## 委譲フロー
 
 ```
 main (Fable)
   └─ work-lead (Opus)        タスク分解・設計判断・検証
-       └─ coder (Sonnet)     仕様が明確なサブタスクの実装
+       ├─ coder (Sonnet)     仕様が明確なサブタスクの実装
+       └─ explorer (Haiku)   機械的な探索・検索
 ```
 
 - `main → work-lead`: 原則すべてのタスク。
 - `work-lead → coder`: 仕様が明確なサブタスク。曖昧さが残るものは `work-lead` が自分で処理する。
+- `work-lead → explorer`: 所在特定・使用箇所の洗い出しなどの機械的な調査。`work-lead` が自分でコードベースを読み回る前にまず委譲し、Opus の消費を抑える。
 - `coder` は仕様外の判断が必要になったら作業を止めて `work-lead` に報告する。
 
 ## インストール
