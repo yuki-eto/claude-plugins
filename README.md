@@ -31,7 +31,7 @@ Claude Code のセッション内でプラグインをインストールしま�
 ```markdown
 ## 委譲ポリシー
 
-原則すべてのタスクを `work-lead` サブエージェントに委譲する。
+原則すべてのタスクを `work-lead` サブエージェント（Agent ツールの `subagent_type` にはフルネームの `model-routing:work-lead` を指定）に委譲する。
 
 メイン会話が直接扱うのは、次の 2 つのみ:
 

@@ -13,6 +13,8 @@ Fable 司令塔 + Opus/Sonnet モデル振り分け構成のプラグイン。
 | `coder` | Sonnet | 仕様が明確な実装・単純な修正・簡単なコード調査。Read / Edit / Write / Bash / Grep / Glob のみ。 |
 | `explorer` | Haiku | コードベースの探索・検索専用。ファイルや関数の所在特定、使用箇所の洗い出し、依存関係の列挙などの機械的な調査。読み取り専用（Read / Grep / Glob / Bash）で、原因分析や設計判断はしない。 |
 
+Agent ツールで委譲する際の `subagent_type` は、プラグインプレフィックス付きのフルネーム（`model-routing:work-lead` / `model-routing:coder` / `model-routing:explorer`）で指定する必要があります。
+
 ## 委譲フロー
 
 ```
