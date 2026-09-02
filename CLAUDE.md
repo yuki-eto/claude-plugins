@@ -9,15 +9,22 @@ Claude Code のプラグインマーケットプレイス `yuki-eto-plugins` の
 - `.claude-plugin/marketplace.json` — マーケットプレイスの定義。収録プラグインの一覧を持つ。
 - `plugins/<name>/` — 各プラグインの実体。`.claude-plugin/plugin.json` をマニフェストとして持ち、必要に応じて `agents/` `commands/` `skills/` `hooks/` を置く。
 
-現在収録しているのは `model-routing`（Fable 司令塔 + Opus/Sonnet のモデル振り分け構成。`work-lead` と `coder` の 2 エージェントを提供）のみ。
+収録プラグイン:
+
+- `model-routing` — Fable 司令塔 + Opus/Sonnet のモデル振り分け構成。`work-lead` / `coder` / `explorer` の 3 エージェントを提供する。
+- `no-shell-edit` — フックのみのプラグイン。PreToolUse(Bash) で `hooks/guard.py` がコマンドを解析し、Bash をエディタ代わりに使う操作（単一ファイルへの `sed -i`、ファイルへのリダイレクト、インライン python の書き込み等）を deny して Edit / Write に誘導する。複数ファイルの一括 `sed -i` は許可、`patch` / `git apply` は ask。判定ロジックを変えたら `hooks/test_guard.py` にケースを追加する。
+
+このリポジトリ自身の作業でも、ファイルの作成・変更は Edit / Write ツールで行う（シェルのリダイレクトや `sed -i` は使わない）。
 
 ## Validation
 
-変更後は必ず両方を実行する。
+変更後は必ず実行する。
 
 ```bash
 claude plugin validate .
 claude plugin validate ./plugins/model-routing
+claude plugin validate ./plugins/no-shell-edit
+python3 -m unittest discover -s plugins/no-shell-edit/hooks -p 'test_*.py'
 ```
 
 ## Adding a Plugin

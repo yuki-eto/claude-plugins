@@ -7,6 +7,11 @@
       "name": "model-routing",
       "source": "./plugins/model-routing",
       "description": "Fable司令塔 + Opus/Sonnet モデル振り分け構成"
+    },
+    {
+      "name": "no-shell-edit",
+      "source": "./plugins/no-shell-edit",
+      "description": "Bash 経由のファイル書き換えを禁止し Edit / Write ツールへ誘導する"
     }
   ]
 }

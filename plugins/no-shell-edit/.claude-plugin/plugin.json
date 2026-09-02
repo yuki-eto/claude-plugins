@@ -1,0 +1,6 @@
+{
+  "name": "no-shell-edit",
+  "version": "1.0.0",
+  "description": "Bash 経由のファイル書き換え（sed -i / リダイレクト / インライン python 等）を禁止し Edit / Write ツールへ誘導する",
+  "author": { "name": "yuki-eto" }
+}

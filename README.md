@@ -9,6 +9,7 @@
 | プラグイン | 説明 |
 | --- | --- |
 | [`model-routing`](./plugins/model-routing) | Fable司令塔 + Opus/Sonnet モデル振り分け構成 |
+| [`no-shell-edit`](./plugins/no-shell-edit) | Bash 経由のファイル書き換え（`sed -i` / リダイレクト / インライン python 等）を禁止し Edit / Write ツールへ誘導する |
 
 ## インストール
 
@@ -22,6 +23,7 @@ Claude Code のセッション内でプラグインをインストールしま�
 
 ```
 /plugin install model-routing@yuki-eto-plugins
+/plugin install no-shell-edit@yuki-eto-plugins
 ```
 
 ## 委譲ポリシーのテンプレート
@@ -60,4 +62,6 @@ Claude Code のセッション内でプラグインをインストールしま�
 ```bash
 claude plugin validate .
 claude plugin validate ./plugins/model-routing
+claude plugin validate ./plugins/no-shell-edit
+python3 -m unittest discover -s plugins/no-shell-edit/hooks -p 'test_*.py'
 ```
