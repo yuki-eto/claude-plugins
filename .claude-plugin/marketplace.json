@@ -6,7 +6,7 @@
     {
       "name": "model-routing",
       "source": "./plugins/model-routing",
-      "description": "Fable司令塔 + Opus/Sonnet モデル振り分け構成"
+      "description": "Opus 司令塔 + Fable エスカレーションのモデル振り分け構成"
     },
     {
       "name": "no-shell-edit",

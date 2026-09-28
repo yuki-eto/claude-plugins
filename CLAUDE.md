@@ -11,7 +11,7 @@ Claude Code のプラグインマーケットプレイス `yuki-eto-plugins` の
 
 収録プラグイン:
 
-- `model-routing` — Fable 司令塔 + Opus/Sonnet のモデル振り分け構成。`work-lead` / `coder` / `explorer` の 3 エージェントを提供する。
+- `model-routing` — Opus 司令塔 + Fable エスカレーションのモデル振り分け構成。`coder` / `explorer` / `advisor` の 3 エージェントを提供する。
 - `no-shell-edit` — フックのみのプラグイン。PreToolUse(Bash) で `hooks/guard.py` がコマンドを解析し、Bash をエディタ代わりに使う操作（単一ファイルへの `sed -i`、ファイルへのリダイレクト、インライン python の書き込み等）を deny して Edit / Write に誘導する。複数ファイルの一括 `sed -i` は許可、`patch` / `git apply` は ask。判定ロジックを変えたら `hooks/test_guard.py` にケースを追加する。
 
 このリポジトリ自身の作業でも、ファイルの作成・変更は Edit / Write ツールで行う（シェルのリダイレクトや `sed -i` は使わない）。
