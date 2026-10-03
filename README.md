@@ -10,6 +10,7 @@
 | --- | --- |
 | [`model-routing`](./plugins/model-routing) | Opus 司令塔 + Fable エスカレーションのモデル振り分け構成 |
 | [`no-shell-edit`](./plugins/no-shell-edit) | Bash 経由のファイル書き換え（`sed -i` / リダイレクト / インライン python 等）を禁止し Edit / Write ツールへ誘導する |
+| [`godot-csharp`](./plugins/godot-csharp) | Godot 4.x (.NET/C#) で iOS/macOS 向けゲームを作るための指針 skill・新規プロジェクト作成コマンド（`/godot-new-project`）・サンドボックス用 dotnet フラグ警告 hook |
 
 ## インストール
 
@@ -24,6 +25,7 @@ Claude Code のセッション内でプラグインをインストールしま�
 ```
 /plugin install model-routing@yuki-eto-plugins
 /plugin install no-shell-edit@yuki-eto-plugins
+/plugin install godot-csharp@yuki-eto-plugins
 ```
 
 ## 委譲ポリシーのテンプレート
@@ -65,5 +67,7 @@ Claude Code のセッション内でプラグインをインストールしま�
 claude plugin validate .
 claude plugin validate ./plugins/model-routing
 claude plugin validate ./plugins/no-shell-edit
+claude plugin validate ./plugins/godot-csharp
 python3 -m unittest discover -s plugins/no-shell-edit/hooks -p 'test_*.py'
+python3 -m unittest discover -s plugins/godot-csharp/hooks -p 'test_*.py'
 ```

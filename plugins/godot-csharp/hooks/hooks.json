@@ -1,0 +1,17 @@
+{
+  "description": "Godot プロジェクトで dotnet build / test にサンドボックス回避フラグ（-m:1 -nodeReuse:false --disable-build-servers）が欠けていたら警告する。dotnet test に --no-build が無い場合も警告する（deny / ask はしない）",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/dotnet_flags.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -12,6 +12,11 @@
       "name": "no-shell-edit",
       "source": "./plugins/no-shell-edit",
       "description": "Bash 経由のファイル書き換えを禁止し Edit / Write ツールへ誘導する"
+    },
+    {
+      "name": "godot-csharp",
+      "source": "./plugins/godot-csharp",
+      "description": "Godot 4.x (.NET/C#) で iOS/macOS 向けゲームを作るための指針 skill・新規プロジェクト作成コマンド・dotnet フラグ警告 hook"
     }
   ]
 }

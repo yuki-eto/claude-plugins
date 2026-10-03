@@ -13,6 +13,7 @@ Claude Code のプラグインマーケットプレイス `yuki-eto-plugins` の
 
 - `model-routing` — Opus 司令塔 + Fable エスカレーションのモデル振り分け構成。`coder` / `explorer` / `advisor` の 3 エージェントを提供する。
 - `no-shell-edit` — フックのみのプラグイン。PreToolUse(Bash) で `hooks/guard.py` がコマンドを解析し、Bash をエディタ代わりに使う操作（単一ファイルへの `sed -i`、ファイルへのリダイレクト、インライン python の書き込み等）を deny して Edit / Write に誘導する。複数ファイルの一括 `sed -i` は許可、`patch` / `git apply` は ask。判定ロジックを変えたら `hooks/test_guard.py` にケースを追加する。
+- `godot-csharp` — Godot 4.x (.NET/C#) 向け。`skills/godot-csharp-playbook/`（SKILL.md + `references/` の各章 + `templates/` の雛形）、`skills/godot-agent-driving/`、`commands/godot-new-project.md`、PreToolUse(Bash) の `hooks/dotnet_flags.py`（Godot プロジェクトで `dotnet build` / `test` にサンドボックス用フラグが無いと additionalContext で警告。`dotnet test` に `--no-build` が無い場合も警告。deny はしない）。判定ロジックを変えたら `hooks/test_dotnet_flags.py` にケースを追加する。章を追加・改名したら SKILL.md の表とリンクを更新する。
 
 このリポジトリ自身の作業でも、ファイルの作成・変更は Edit / Write ツールで行う（シェルのリダイレクトや `sed -i` は使わない）。
 
@@ -24,7 +25,9 @@ Claude Code のプラグインマーケットプレイス `yuki-eto-plugins` の
 claude plugin validate .
 claude plugin validate ./plugins/model-routing
 claude plugin validate ./plugins/no-shell-edit
+claude plugin validate ./plugins/godot-csharp
 python3 -m unittest discover -s plugins/no-shell-edit/hooks -p 'test_*.py'
+python3 -m unittest discover -s plugins/godot-csharp/hooks -p 'test_*.py'
 ```
 
 ## Adding a Plugin

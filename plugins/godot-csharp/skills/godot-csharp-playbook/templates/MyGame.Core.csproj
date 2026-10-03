@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Godot-independent logic only: no Node/AudioServer/DisplayServer.
+       The same shape works for MyGame.Native (add AllowUnsafeBlocks for
+       function-pointer P/Invoke). -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>MyGame.Core</RootNamespace>
+    <Configurations>Debug;Release;ExportDebug;ExportRelease</Configurations>
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+</Project>

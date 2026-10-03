@@ -1,0 +1,87 @@
+# CLAUDE.md
+
+<!-- Root CLAUDE.md template for a Godot 4.x C# game developed with Claude Code
+     agents. Replace MyGame / <...> placeholders; delete sections that don't apply.
+     Keep only current rules here -- move history to docs/. -->
+
+## Language
+
+Respond to the user in Japanese (日本語). Code, identifiers, comments, and commit messages stay in English.
+
+## Repository layout
+
+- `godot/` — the Godot <ver> (C#/.NET) app. See `godot/CLAUDE.md` for build/test commands and C# conventions.
+- `assets/` — asset master. `godot/assets/` is generated from it by `<sync command>`; never edit `godot/assets/` by hand (`*.import` sidecars excepted).
+- `docs/` — spec, tasks, history. `docs/README.md` is the index.
+
+## Git workflow
+
+Never run `git commit` / `git push` unless the user explicitly asks in that message. Staging is fine.
+
+## Subagent delegation
+
+- The main conversation (Opus) plans, makes design decisions, and verifies results; it does not edit source code (docs, memory, CLAUDE.md are fine).
+- Well-specified implementation goes to `model-routing:coder`; the main conversation then checks the diff and runs build + tests.
+- Mechanical lookups (where is X, who calls Y) go to `model-routing:explorer`.
+- Escalate to `model-routing:advisor` after two failed fix→verify cycles on the same problem, when out of hypotheses, or for architecture-wide decisions; hand its plan to `coder`.
+- A brief states: goal, relevant files, decisions already made, completion criteria.
+- Every brief forbids `git checkout` / `git restore` / `git stash` / `git clean`; unexpected changes are reported, not reverted.
+- Don't route implementation through plan mode (post-approval delegation gets denied).
+- Code review is done in the main conversation; fork-run review skills only when the user names them, after confirming.
+
+## Editing files
+
+Edit source only via the Edit/Write tools — never `sed -i`, `perl -pi`, or a script that rewrites files. Generated files are regenerated, not hand-edited.
+
+## Verification workflow
+
+- The agent's completion gate is build + tests: `dotnet build` + `dotnet test` (see `godot/CLAUDE.md`).
+- For `godot/` changes: launch `godot/tools/run.sh` from the main conversation, leave the window running, and end with a checklist (what changed, where to look, expected behavior).
+- Screenshots / synthetic input driving are opt-in — only when the user asks in that conversation.
+
+## Working scope
+
+- No `find /` or other filesystem-wide scans; stay inside the repo (`~/.claude` and scratchpad excepted).
+
+<!-- ===================== godot/CLAUDE.md ===================== -->
+
+# CLAUDE.md (godot/)
+
+## Project layout
+
+- `MyGame.csproj` — the Godot app (`Godot.NET.Sdk`, `InvariantGlobalization=true`, `<Compile Remove="lib/**/*.cs" />` + `tools/**`). `Autoload/GameApp.cs` is the only Autoload. `run/main_scene` is `Scenes/Title.tscn`.
+- `lib/MyGame.Core/` — Godot-independent logic (`IsAotCompatible=true`).
+- `lib/MyGame.Core.Tests/` — xUnit, no Godot reference; excluded from ExportDebug/ExportRelease.
+- `lib/` and `tools/` have `.gdignore`.
+
+## Environment
+
+- Godot <ver> .NET at `/Applications/Godot_mono.app`. `/usr/local/bin/godot` must be a wrapper script that `exec`s the real binary — a symlink breaks GodotSharp resolution.
+- Export templates for <ver>.stable.mono must be installed separately after every editor upgrade.
+- iOS: `xcode-select` must point at Xcode.app; close Xcode before `export.sh iOS`.
+
+## Commands
+
+- `dotnet build godot/MyGame.sln -m:1 -nodeReuse:false --disable-build-servers` — build (flags required inside the sandbox).
+- `dotnet test godot/lib/MyGame.Core.Tests/MyGame.Core.Tests.csproj -m:1 -nodeReuse:false --disable-build-servers --no-build` — tests (run alone with the sandbox disabled: vstest binds loopback; `--no-build` keeps build/restore inside the sandbox).
+- `godot --headless --path godot --import` — run after asset/import-setting changes; build first on a fresh checkout.
+- `godot/tools/run.sh` — build → import → launch.
+- `godot/tools/export.sh <iOS|macOS> [debug|release]` — build → import → export → iOS signing patch.
+- Only `dotnet test --no-build`, `godot`, `run.sh`, and `export.sh` run with the sandbox disabled, each as a standalone command (never chained with `&&`). Everything else, including `dotnet build`, stays sandboxed. Ask before adding third-party addons or NuGet packages (they run unsandboxed via the editor/tests).
+
+## C# conventions
+
+- Game logic lives in Core; engine handles come in through small Core-side interfaces.
+- Randomness is injected (`IRandomSource`), never a static call.
+- JSON only through source-generated `JsonSerializerContext` (NativeAOT trimming).
+- Bundled data loaders throw on failure; user-data loaders (`user://`) fall back to defaults.
+- UI is built inside `UiFrame` (fixed design space fitted into `SafeArea`); backgrounds stay outside it; modals own their frame.
+- Late-shown root Controls size via `FitToViewport()`, never `SetAnchorsPreset()`.
+- All Controls `FocusMode = None` (text `LineEdit`s: `Click` + release before any modal).
+- Tap handlers accept only `InputEventScreenTouch { Pressed: true, Index: 0 }`; modal backdrops dismiss on release.
+- Fonts are imported as MSDF.
+- <Add engine quirks here with the reason and how they were found.>
+
+## Testing discipline
+
+Core logic gets real xUnit tests. Godot-bound scene code is verified by the user on a launched build — the agent builds, tests, launches `run.sh`, and hands over a checklist.

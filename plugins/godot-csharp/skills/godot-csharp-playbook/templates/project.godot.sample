@@ -1,0 +1,42 @@
+; Recommended settings for a portrait, touch-first iOS/macOS game.
+; Usable as a fresh project.godot (rename MyGame), or merge into an
+; editor-generated one; see references/project-setup.md.
+
+config_version=5
+
+[application]
+
+config/name="MyGame"
+config/features=PackedStringArray("4.7", "C#", "Mobile")
+run/main_scene="res://Scenes/Title.tscn"
+run/max_fps=0
+
+[autoload]
+
+GameApp="*res://Autoload/GameApp.cs"
+
+[dotnet]
+
+project/assembly_name="MyGame"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/size/window_width_override=540
+window/size/window_height_override=960
+; int enum 0..6 (6 = Sensor: plist lists all four orientations; pin the real
+; one at startup with DisplayServer.ScreenSetOrientation()). Never a string.
+window/handheld/orientation=1
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/vsync/vsync_mode=1
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[rendering]
+
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

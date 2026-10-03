@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- No Godot reference. In the .sln, give this project ActiveCfg only (no
+       Build.0) under ExportDebug/ExportRelease so tests never ship. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>MyGame.Core.Tests</RootNamespace>
+    <Configurations>Debug;Release;ExportDebug;ExportRelease</Configurations>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../MyGame.Core/MyGame.Core.csproj" />
+  </ItemGroup>
+
+  <!-- Golden files load via AppContext.BaseDirectory, independent of the
+       runner's cwd. Regenerate with UPDATE_GOLDEN=1. -->
+  <ItemGroup>
+    <Content Include="Golden/**/*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
