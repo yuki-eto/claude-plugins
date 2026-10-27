@@ -1,0 +1,6 @@
+{
+  "name": "marp-slides",
+  "version": "0.1.0",
+  "description": "情報デザインの原則に沿って Marp でスライドを作るための指針 skill・テーマ雛形・デッキ作成/レビューコマンド・lint スクリプト",
+  "author": { "name": "yuki-eto" }
+}

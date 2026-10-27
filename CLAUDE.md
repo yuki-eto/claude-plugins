@@ -14,6 +14,7 @@ Claude Code のプラグインマーケットプレイス `yuki-eto-plugins` の
 - `model-routing` — Opus 司令塔 + Fable エスカレーションのモデル振り分け構成。`coder` / `explorer` / `advisor` の 3 エージェントを提供する。
 - `no-shell-edit` — フックのみのプラグイン。PreToolUse(Bash) で `hooks/guard.py` がコマンドを解析し、Bash をエディタ代わりに使う操作（単一ファイルへの `sed -i`、ファイルへのリダイレクト、インライン python の書き込み等）を deny して Edit / Write に誘導する。複数ファイルの一括 `sed -i` は許可、`patch` / `git apply` は ask。判定ロジックを変えたら `hooks/test_guard.py` にケースを追加する。
 - `godot-csharp` — Godot 4.x (.NET/C#) 向け。`skills/godot-csharp-playbook/`（SKILL.md + `references/` の各章 + `templates/` の雛形）、`skills/godot-agent-driving/`、`commands/godot-new-project.md`、PreToolUse(Bash) の `hooks/dotnet_flags.py`（Godot プロジェクトで `dotnet build` / `test` にサンドボックス用フラグが無いと additionalContext で警告。`dotnet test` に `--no-build` が無い場合も警告。deny はしない）。判定ロジックを変えたら `hooks/test_dotnet_flags.py` にケースを追加する。章を追加・改名したら SKILL.md の表とリンクを更新する。
+- `marp-slides` — Marp でのスライド作成向け。天野由貴「情報デザインを意識したスライド作成入門 第3版」（CC BY-SA 4.0）の原則を Marp に落とし込む。`skills/marp-slide-design/`（SKILL.md + `references/` の各章 + `templates/` のテーマ `info-design`・雛形デッキ）、`commands/marp-new-deck.md`・`commands/marp-review.md`、`scripts/lint_deck.py`（デッキの機械的な違反を検出する。hook ではなく `/marp-review` から呼ぶ）。判定ロジックを変えたら `scripts/test_lint_deck.py` にケースを追加する。テーマの色・クラス・サイズを変えたら `references/marp-implementation.md` と `templates/deck.md` を合わせ、雛形が lint を通ることを確認する。
 
 このリポジトリ自身の作業でも、ファイルの作成・変更は Edit / Write ツールで行う（シェルのリダイレクトや `sed -i` は使わない）。
 
@@ -26,8 +27,11 @@ claude plugin validate .
 claude plugin validate ./plugins/model-routing
 claude plugin validate ./plugins/no-shell-edit
 claude plugin validate ./plugins/godot-csharp
+claude plugin validate ./plugins/marp-slides
 python3 -m unittest discover -s plugins/no-shell-edit/hooks -p 'test_*.py'
 python3 -m unittest discover -s plugins/godot-csharp/hooks -p 'test_*.py'
+python3 -m unittest discover -s plugins/marp-slides/scripts -p 'test_*.py'
+python3 plugins/marp-slides/scripts/lint_deck.py plugins/marp-slides/skills/marp-slide-design/templates/deck.md --theme plugins/marp-slides/skills/marp-slide-design/templates/theme.css
 ```
 
 ## Adding a Plugin

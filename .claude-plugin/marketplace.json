@@ -17,6 +17,11 @@
       "name": "godot-csharp",
       "source": "./plugins/godot-csharp",
       "description": "Godot 4.x (.NET/C#) で iOS/macOS 向けゲームを作るための指針 skill・新規プロジェクト作成コマンド・dotnet フラグ警告 hook"
+    },
+    {
+      "name": "marp-slides",
+      "source": "./plugins/marp-slides",
+      "description": "情報デザインの原則に沿って Marp でスライドを作るための指針 skill・テーマ雛形・デッキ作成/レビューコマンド・lint スクリプト"
     }
   ]
 }
