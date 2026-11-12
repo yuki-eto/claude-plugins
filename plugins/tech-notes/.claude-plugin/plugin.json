@@ -1,0 +1,6 @@
+{
+  "name": "tech-notes",
+  "version": "0.1.0",
+  "description": "作業中に得た技術的な知見を匿名化して個人用ノートリポジトリ ~/tech-notes に記録する /note skill",
+  "author": { "name": "yuki-eto" }
+}
