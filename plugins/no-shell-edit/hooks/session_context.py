@@ -12,7 +12,7 @@ import sys
 POLICY = """\
 [no-shell-edit] ファイルの作成・変更は Edit / Write ツールのみで行う。Bash をエディタ代わりに使わない。
 - deny される例: 単一ファイルへの `sed -i` / `perl -i`、`> file` `>> file` のリダイレクト、`tee file`、`python3 -c` / `node -e` / heredoc スクリプトからのファイル書き込み、`bash -c` 経由の同等操作。
-- 許可される例外: 複数ファイルへの一括置換（`sed -i ... a.py b.py`、glob、`find -exec`、`xargs`、`for` ループ内）。`patch` / `git apply` はユーザー確認（ask）になる。
+- 許可される例外: 複数ファイルへの一括置換（`sed -i ... a.py b.py`、glob、`find -exec`、`xargs`、`for` ループ内）。ただし一括置換も、実行前に対象ファイルと置換内容をユーザーに提示する。`patch` / `git apply` はユーザー確認（ask）になる。
 - 一時的な出力は /tmp または $TMPDIR 配下に書き出す（そこへのリダイレクトは許可される）。"""
 
 

@@ -18,7 +18,7 @@ Claude はコードやドキュメントを修正するとき、Edit / Write で
 
 ### 許可されるもの（判定を返さず、通常の許可フローへ）
 
-- **複数ファイルへの一括置換**: `sed -i 's/a/b/' a.py b.py`、glob（`src/*.py`）、`$(git ls-files ...)`、`grep -rl foo . | xargs sed -i ...`、`find ... -exec sed -i ... {} +`、`for f in *.py; do sed -i ... "$f"; done`
+- **複数ファイルへの一括置換**: `sed -i 's/a/b/' a.py b.py`、glob（`src/*.py`）、`$(git ls-files ...)`、`grep -rl foo . | xargs sed -i ...`、`find ... -exec sed -i ... {} +`、`for f in *.py; do sed -i ... "$f"; done`。フックは止めないが、実行前に対象ファイルと置換内容をユーザーに提示するよう SessionStart で指示している
 - **一時ファイルへの出力**: `/tmp/`、`/private/tmp/`、`/var/tmp/`、`/var/folders/`、`$TMPDIR` 配下、`$(mktemp)`、`tmp` / `temp` / `scratch` を含む変数名（`> "$tmp"`）、`/dev/null` 等
 - **stderr のリダイレクト**: `2>err.log`、`2>&1`
 - **正規のツール実行**: `prettier --write`、`gofmt -w`、`eslint --fix`、`npm install`、`git commit`、`cargo fmt` など
