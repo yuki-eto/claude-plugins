@@ -30,24 +30,9 @@ Claude Code のセッション内でプラグインをインストールしま�
 /plugin install tech-notes@yuki-eto-plugins
 ```
 
-## 委譲ポリシーのテンプレート
+## model-routing の委譲ポリシー
 
-`model-routing` を使う場合、ワークリポジトリの `CLAUDE.md` に以下を貼り付けてください。メイン会話のモデルは Opus（`/model` で設定）で動かす前提です。
-
-```markdown
-## 委譲ポリシー
-
-メイン会話（Opus）は計画・設計判断・成果物の検証を担い、実作業は下位のサブエージェントに委譲する。
-
-- 仕様が明確な実装・単純な修正は `coder`（Agent ツールの `subagent_type` にはフルネームの `model-routing:coder` を指定）に委譲する。委譲時は対象ファイル・期待する変更・完了条件を具体的に伝え、戻ってきた成果物は必ず自分で検証する（差分確認・テスト実行）。仕様が曖昧な部分は `coder` に投げず、メイン会話で判断する。
-- ファイルや関数の所在特定、使用箇所の洗い出しなど機械的な探索は `explorer`（`model-routing:explorer`）に委譲する。メイン会話が自分でコードベースを広く読み回らない。探索結果（パス・行番号）を `coder` に渡す場合はそのまま引き継ぎ、二重に探索させない。
-- 次のいずれかに当てはまったら `advisor`（`model-routing:advisor`、Fable）にエスカレーションする。呼ぶ際は問題・試したこと・失敗内容・関連パスを渡す。`advisor` の返した方針をもとに、実装は `coder` に委譲する。
-  - 同じ問題で修正→検証が 2 回失敗した
-  - 仮説が尽きて原因を特定できない
-  - アーキテクチャ全体に関わる設計判断
-
-サブエージェントの出力はユーザーに直接見えないため、メイン会話が要約してユーザーに報告する。
-```
+`model-routing` の委譲ポリシーは、プラグインの SessionStart フックがセッション開始時に自動で注入します。ワークリポジトリの `CLAUDE.md` への記載は不要です。メイン会話のモデルは Opus（`/model` で設定）で動かす前提です。詳細は [`plugins/model-routing/README.md`](./plugins/model-routing/README.md) を参照してください。
 
 ## プロジェクト単位でのマーケットプレイス登録
 
@@ -71,6 +56,7 @@ claude plugin validate ./plugins/model-routing
 claude plugin validate ./plugins/no-shell-edit
 claude plugin validate ./plugins/godot-csharp
 claude plugin validate ./plugins/tech-notes
+python3 -m unittest discover -s plugins/model-routing/hooks -p 'test_*.py'
 python3 -m unittest discover -s plugins/no-shell-edit/hooks -p 'test_*.py'
 python3 -m unittest discover -s plugins/godot-csharp/hooks -p 'test_*.py'
 ```

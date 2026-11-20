@@ -1,0 +1,16 @@
+{
+  "description": "セッション開始時にメイン会話の委譲ポリシー（coder / explorer / reviewer / advisor の使い分け）を注入する",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/session_context.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
