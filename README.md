@@ -12,6 +12,7 @@
 | [`no-shell-edit`](./plugins/no-shell-edit) | Bash 経由のファイル書き換え（`sed -i` / リダイレクト / インライン python 等）を禁止し Edit / Write ツールへ誘導する |
 | [`godot-csharp`](./plugins/godot-csharp) | Godot 4.x (.NET/C#) で iOS/macOS 向けゲームを作るための指針 skill・新規プロジェクト作成コマンド（`/godot-new-project`）・サンドボックス用 dotnet フラグ警告 hook |
 | [`tech-notes`](./plugins/tech-notes) | 作業中に得た技術的な知見を匿名化して個人用ノートリポジトリ `~/tech-notes` に記録する skill（`/note`） |
+| [`session-title`](./plugins/session-title) | セッション名の先頭に `[リポジトリ名]`（リポジトリ外・フォルダ未選択なら `[global]`）を付ける hook |
 
 ## インストール
 
@@ -28,6 +29,7 @@ Claude Code のセッション内でプラグインをインストールしま�
 /plugin install no-shell-edit@yuki-eto-plugins
 /plugin install godot-csharp@yuki-eto-plugins
 /plugin install tech-notes@yuki-eto-plugins
+/plugin install session-title@yuki-eto-plugins
 ```
 
 ## model-routing の委譲ポリシー
@@ -56,7 +58,9 @@ claude plugin validate ./plugins/model-routing
 claude plugin validate ./plugins/no-shell-edit
 claude plugin validate ./plugins/godot-csharp
 claude plugin validate ./plugins/tech-notes
+claude plugin validate ./plugins/session-title
 python3 -m unittest discover -s plugins/model-routing/hooks -p 'test_*.py'
 python3 -m unittest discover -s plugins/no-shell-edit/hooks -p 'test_*.py'
 python3 -m unittest discover -s plugins/godot-csharp/hooks -p 'test_*.py'
+python3 -m unittest discover -s plugins/session-title/hooks -p 'test_*.py'
 ```

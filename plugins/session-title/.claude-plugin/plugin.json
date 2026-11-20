@@ -1,0 +1,6 @@
+{
+  "name": "session-title",
+  "version": "1.0.0",
+  "description": "セッション名の先頭に [リポジトリ名]（リポジトリ外・フォルダ未選択なら [global]）を付ける",
+  "author": { "name": "yuki-eto" }
+}

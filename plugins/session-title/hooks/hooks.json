@@ -1,0 +1,16 @@
+{
+  "description": "セッション名の先頭に [リポジトリ名]（リポジトリ外なら [global]）を付ける",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/title_prefix.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

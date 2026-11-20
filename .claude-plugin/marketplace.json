@@ -27,6 +27,11 @@
       "name": "tech-notes",
       "source": "./plugins/tech-notes",
       "description": "作業中に得た技術的な知見を匿名化して個人用ノートリポジトリ ~/tech-notes に記録する /note skill"
+    },
+    {
+      "name": "session-title",
+      "source": "./plugins/session-title",
+      "description": "セッション名の先頭に [リポジトリ名]（リポジトリ外・フォルダ未選択なら [global]）を付ける UserPromptSubmit hook"
     }
   ]
 }
